@@ -8,12 +8,27 @@ export class UsersMiddleware implements NestMiddleware {
 
     const body: CreateUserDto = req.body;
 
-    if (!body.firstName) {
-      res.status(401).send({ message: 'firstName is required' })
-    } else if (!body.lastName) {
-      res.status(401).send({ message: 'lastName is required' })
-    } else {
-      next();
+    switch (req.method) {
+      case "POST":
+        if (!body.firstName) {
+          res.status(401).send({ message: 'firstName is required' })
+        } else if (!body.lastName) {
+          res.status(401).send({ message: 'lastName is required' })
+        } else {
+          next();
+        }
+        break;
+      case "PUT" || "DELETE":
+        if (!req.params.id) {
+          res.status(401).send({ message: 'userId is required' })
+        } else {
+          next();
+        }
+        break;
+      default:
+        next()
+        break;
     }
+
   }
 }
