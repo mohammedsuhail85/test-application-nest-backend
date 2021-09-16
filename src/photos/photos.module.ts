@@ -8,6 +8,6 @@ import { PhotosService } from './photos.service';
   imports: [TypeOrmModule.forFeature([Photo])],
   controllers: [PhotosController],
   providers: [PhotosService],
-  exports: [PhotosService]
+  exports: [PhotosService, TypeOrmModule]
 })
 export class PhotosModule { }

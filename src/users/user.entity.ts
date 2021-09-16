@@ -1,3 +1,4 @@
+import { Cars } from "src/cars/car.entity";
 import { Photo } from "src/photos/photo.entity";
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -22,4 +23,7 @@ export class User extends BaseEntity {
 
   @OneToMany(type => Photo, photo => photo.user)
   photos: Photo[];
+
+  @OneToMany(() => Cars, car => car.user)
+  cars: Cars[];
 }

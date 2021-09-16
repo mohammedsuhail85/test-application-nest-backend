@@ -22,7 +22,7 @@ export class PhotosService {
   }
 
   getById(id: number): Promise<Photo> {
-    return this.photoRepository.findOne(id);
+    return this.photoRepository.findOne(id, { relations: ['user'] });
   }
 
   updatePhoto(id: number, updateData: Photo): Promise<UpdateResult> {

@@ -7,6 +7,8 @@ import { User } from './users/user.entity';
 import { PhotosModule } from './photos/photos.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { CarsModule } from './cars/cars.module';
+import { Cars } from './cars/car.entity';
 
 @Module({
   imports: [
@@ -17,13 +19,14 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: '',
       database: 'test-application-nest',
-      entities: [User, Photo],
+      entities: [User, Photo, Cars],
       synchronize: true,
       // autoLoadEntities: true
     }),
     UsersModule,
     PhotosModule,
     AuthModule,
+    CarsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
