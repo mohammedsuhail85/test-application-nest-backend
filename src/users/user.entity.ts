@@ -1,5 +1,5 @@
 import { Photo } from "src/photos/photo.entity";
-import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -15,9 +15,11 @@ export class User extends BaseEntity {
   lastName: string;
 
   @Column({ default: true })
-  isActive: boolean
+  isActive: boolean;
+
+  @Column({ nullable: false })
+  password: string;
 
   @OneToMany(type => Photo, photo => photo.user)
-  @JoinColumn()
   photos: Photo[];
 }

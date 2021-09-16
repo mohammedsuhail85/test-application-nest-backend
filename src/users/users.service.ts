@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Photo } from 'src/photos/photo.entity';
+import { PhotosService } from 'src/photos/photos.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
@@ -7,14 +9,25 @@ import { User } from './user.entity';
 @Injectable()
 export class UsersService {
 
-  constructor(@InjectRepository(User) private userRepository: Repository<User>) { }
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+    private photoService: PhotosService
+  ) { }
 
-  createUser(createData: CreateUserDto): Promise<User> {
+  async createUser(createData: CreateUserDto): Promise<User> {
 
     const user = new User();
     user.firstName = createData.firstName;
     user.lastName = createData.lastName;
+    user.password = createData.password;
 
+    const photo = await this.photoService.getById(createData.photo);
+
+    if (!photo) {
+      throw new HttpException('Photo not found', HttpStatus.NOT_FOUND);
+    }
+
+    user.photos = [photo];
     return this.userRepository.save(user);
   }
 
@@ -23,7 +36,7 @@ export class UsersService {
   }
 
   findOne(id: string): Promise<User> {
-    return this.userRepository.findOne(id);
+    return this.userRepository.findOne(id, { relations: ["photo"] });
   }
 
   async remove(id: string): Promise<void> {

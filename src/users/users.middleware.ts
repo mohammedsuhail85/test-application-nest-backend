@@ -10,10 +10,10 @@ export class UsersMiddleware implements NestMiddleware {
 
     switch (req.method) {
       case "POST":
-        if (!body.firstName) {
-          res.status(401).send({ message: 'firstName is required' })
-        } else if (!body.lastName) {
-          res.status(401).send({ message: 'lastName is required' })
+        if (!body.firstName || !body.lastName) {
+          res.status(401).send({ message: 'firstName and lastName are required' })
+        } else if (!body.password) {
+          res.status(401).send({ message: 'password is required' })
         } else {
           next();
         }
