@@ -11,6 +11,7 @@ import { UsersService } from './users.service';
   imports: [TypeOrmModule.forFeature([User]), PhotosModule, CarsModule],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersModule, UsersService]
 })
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

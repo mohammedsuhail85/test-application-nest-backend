@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
+import { Omit } from 'lodash';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
@@ -19,7 +20,7 @@ export class UsersController {
   }
 
   @Post()
-  createUser(@Body() input: CreateUserDto): Promise<User> {
+  createUser(@Body() input: CreateUserDto): Promise<Omit<User, "password">> {
     return this.usersService.createUser(input);
   }
 

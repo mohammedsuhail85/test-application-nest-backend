@@ -5,6 +5,7 @@ export interface CreateUserDto {
   firstName: string,
   lastName: string,
   password: string,
+  email: string,
   photo: number,
   carNo: number
 }
